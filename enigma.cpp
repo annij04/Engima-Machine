@@ -6,7 +6,7 @@ using namespace std;
 
 class EnigmaMachine {
     private:
-    //rotors are randomly generated
+
     string rotor = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     string plugboard = "ZYXWVUTSRQKLMNOPJIHGFEDCBA"; //only first ten characters are inversed
     string letter_swap = "ZYXWVUTSRQPONMLKJIHGFEDCBA";

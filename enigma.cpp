@@ -27,6 +27,7 @@ class EnigmaMachine {
         c = rotor[size_t(size_t(c - 'A') + rotor3Pos) % 26];
 
         // REFLECTOR
+        //swap letter with its inverse
         c = letter_swap[size_t(c - 'A')];
         // Reverse rotor
         c = (size_t(c - 'A') - rotor3Pos + 26) % 26 + 'A';

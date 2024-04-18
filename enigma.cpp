@@ -6,10 +6,17 @@ using namespace std;
 
 class EnigmaMachine {
     private:
-    //rotors are randomly generated
-    string rotor = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    string plugboard = "ZYXWVUTSRQKLMNOPJIHGFEDCBA"; //only first ten characters are inversed
-    string letter_swap = "ZYXWVUTSRQPONMLKJIHGFEDCBA";
+
+    /*string plugboard = "ABCDRFGHUJKLMNPOWESYIVQXTZ"; //only first ten characters are inversed
+    string rotor1_swap = "BADCFEHGJILKNMPORQTSVUXWZY";
+    string rotor2_swap = "ZYXWVUTSRQPONMLKJIHEGFEDCBA";
+    string rotor3_swap = "ABCDEFGHIJKLUNOPQRSTMVWXYZ";
+    string reflector_swap = "MNOPQRSGTUVWFIXYEZAHKJLBCD";*/
+    string plugboard = "BADCFEHGJILKNMPORQTSVUXWZY"; //only first ten characters are inversed
+    string rotor1_swap = "BADCFEHGJILKNMPORQTSVUXWZY";
+    string rotor2_swap = "BADCFEHGJILKNMPORQTSVUXWZY";
+    string rotor3_swap = "BADCFEHGJILKNMPORQTSVUXWZY";
+    string reflector_swap = "BADCFEHGJILKNMPORQTSVUXWZY";
 
     public:
     // process a one character
@@ -17,31 +24,37 @@ class EnigmaMachine {
         //change to uppercase if not already
         c = char(toupper(c));
 
-        // PLUGBOARD 
+        // PLUGBOARD
         size_t index = size_t(c - 'A');
         c = plugboard[index % 26];
-
-        // ROTOR 
-        c = letter_swap[size_t(c - 'A')];
-        c = rotor[size_t(size_t(c - 'A') + rotor1Pos) % 26];
-        c = letter_swap[size_t(c - 'A')];
-        c = rotor[size_t(size_t(c - 'A') + rotor2Pos) % 26];
-        c = letter_swap[size_t(c - 'A')];
-        c = rotor[size_t(size_t(c - 'A') + rotor3Pos) % 26];
+        cout << c;
+        // ROTOR
+        c = rotor1_swap[size_t(c - 'A')];
+        c = (size_t(c - 'A') + rotor1Pos) % 26 + 'A';
+       
+        c = rotor2_swap[size_t(c - 'A')];
+        c = (size_t(c - 'A') + rotor2Pos) % 26 + 'A';
+       
+        c = rotor3_swap[size_t(c - 'A')];
+        c = (size_t(c - 'A') + rotor3Pos) % 26 + 'A';
 
         // REFLECTOR
-        c = letter_swap[size_t(c - 'A')];
+        //swap letter with its inverse
+        c = reflector_swap[size_t(c - 'A')];
         // Reverse rotor
-        c = letter_swap[size_t(c - 'A')];
         c = (size_t(c - 'A') - rotor3Pos + 26) % 26 + 'A';
-        c = letter_swap[size_t(c - 'A')];
+        c = rotor3_swap[size_t(c - 'A')];
+       
         c = (size_t(c - 'A') - rotor2Pos + 26) % 26 + 'A';
-        c = letter_swap[size_t(c - 'A')];
+       c = rotor2_swap[size_t(c - 'A')];
+       
         c = (size_t(c - 'A') - rotor1Pos + 26) % 26 + 'A';
-        // Plugboard 
+        c = rotor1_swap[size_t(c - 'A')];
+        cout << c;
+        // Plugboard
         index = size_t(c - int('A'));
         c = plugboard[index % 26];
-
+   
         return c;
     }
 };
@@ -57,7 +70,6 @@ int main() {
     cout << "   Part A: Character is swapped with its inverse (similar to plugboard)." << endl;
     cout << "   Part B: Character travels backwards through the three rotors." << endl;
     cout << "   Part C: Character goes through the plugboard again." << endl << endl;
-    cout << "Characters that aren't reflected: KLMNOP" << endl << endl;
     EnigmaMachine enigma;
 
     // DEMONSTRATION    
@@ -65,11 +77,12 @@ int main() {
         cout << "Enter Message" << endl;
         string message;
         getline(cin, message);
-        if (message == "QUIT" || message == "quit") { 
+        if (message == "QUIT" || message == "quit") {
             cout << "THANK YOU" << endl;
-            return 0; 
+            return 0;
         }
-        size_t rotor1Pos = 0, rotor2Pos = 0, rotor3Pos = 0;
+        size_t rotor1Pos = 8, rotor2Pos = 19, rotor3Pos = 2;
+        //size_t rotor1Pos = 0, rotor2Pos = 0, rotor3Pos = 0;
         string encrypted_message = "";
 
         for (size_t i = 0; i < message.size(); ++i) {
@@ -87,7 +100,7 @@ int main() {
                         rotor3Pos = (rotor3Pos + 1) % 26;
                     }
                 }
-            } 
+            }
             else {
                 cout << message[i];
                 encrypted_message += message[i]; //not in alphabet (spaces, symbols etc)
@@ -104,14 +117,12 @@ int main() {
 }
 
 
-// messages: Hello 
+// messages: Hello
 // Encrypt this message.
 // HHH
 // AAAOOO
 // NNNN
-// This means that even if the same letter is typed multiple times in a row, a different letter is outputted each time, adding to the cipher's complexity. 
+// This means that even if the same letter is typed multiple times in a row, a different letter is outputted each time, adding to the cipher's complexity.
 // MATH214
 // this is an encrypted message
 // THIS MESSAGE WILL ROTATE ROTOR ONE AND ROTOR TWO
-
-// SINCE EACH ROTOR ONLY ROTATES AFTER A PREVIOUS ROTOR HAS ROTATED TWENTY SIX TIMES, THE THIRD ROTOR WOULD ONLY ROTATE AFTER EVERY 26 * 26 = 676 CHARACTERS.

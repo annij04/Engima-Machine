@@ -6,7 +6,7 @@ using namespace std;
 
 class EnigmaMachine {
     private:
-
+    //rotors are randomly generated
     string rotor = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     string plugboard = "ZYXWVUTSRQKLMNOPJIHGFEDCBA"; //only first ten characters are inversed
     string letter_swap = "ZYXWVUTSRQPONMLKJIHGFEDCBA";
@@ -22,16 +22,21 @@ class EnigmaMachine {
         c = plugboard[index % 26];
 
         // ROTOR 
+        c = letter_swap[size_t(c - 'A')];
         c = rotor[size_t(size_t(c - 'A') + rotor1Pos) % 26];
+        c = letter_swap[size_t(c - 'A')];
         c = rotor[size_t(size_t(c - 'A') + rotor2Pos) % 26];
+        c = letter_swap[size_t(c - 'A')];
         c = rotor[size_t(size_t(c - 'A') + rotor3Pos) % 26];
 
         // REFLECTOR
-        //swap letter with its inverse
         c = letter_swap[size_t(c - 'A')];
         // Reverse rotor
+        c = letter_swap[size_t(c - 'A')];
         c = (size_t(c - 'A') - rotor3Pos + 26) % 26 + 'A';
+        c = letter_swap[size_t(c - 'A')];
         c = (size_t(c - 'A') - rotor2Pos + 26) % 26 + 'A';
+        c = letter_swap[size_t(c - 'A')];
         c = (size_t(c - 'A') - rotor1Pos + 26) % 26 + 'A';
         // Plugboard 
         index = size_t(c - int('A'));

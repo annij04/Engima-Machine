@@ -27,7 +27,7 @@ class EnigmaMachine {
         // PLUGBOARD
         size_t index = size_t(c - 'A');
         c = plugboard[index % 26];
-        cout << c;
+        //cout << c;
         // ROTOR
         c = rotor1_swap[size_t(c - 'A')];
         c = (size_t(c - 'A') + rotor1Pos) % 26 + 'A';
@@ -46,11 +46,11 @@ class EnigmaMachine {
         c = rotor3_swap[size_t(c - 'A')];
        
         c = (size_t(c - 'A') - rotor2Pos + 26) % 26 + 'A';
-       c = rotor2_swap[size_t(c - 'A')];
+        c = rotor2_swap[size_t(c - 'A')];
        
         c = (size_t(c - 'A') - rotor1Pos + 26) % 26 + 'A';
         c = rotor1_swap[size_t(c - 'A')];
-        cout << c;
+        //cout << c;
         // Plugboard
         index = size_t(c - int('A'));
         c = plugboard[index % 26];
@@ -116,13 +116,5 @@ int main() {
     return 0;
 }
 
-
-// messages: Hello
-// Encrypt this message.
-// HHH
-// AAAOOO
-// NNNN
 // This means that even if the same letter is typed multiple times in a row, a different letter is outputted each time, adding to the cipher's complexity.
-// MATH214
-// this is an encrypted message
 // THIS MESSAGE WILL ROTATE ROTOR ONE AND ROTOR TWO
